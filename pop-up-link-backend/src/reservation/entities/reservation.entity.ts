@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreatedDateColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from 'typeorm';
 import { Event } from '../../event/entities/event.entity';
 
 @Entity('reservation')
@@ -12,7 +12,7 @@ export class Reservation {
     @Column({ length: 20 })
     phoneNumber!: string; // 예약자 전화번호
 
-    @CreatedDateColumn()
+    @CreateDateColumn()
     reservedAt!: Date; // 예약 성공 시간 (Auto TIME_STAMP)
 
     // N:1 관계 설정 - 여러 예약 내역은 하나의 이벤트에 속합니다. (외래키 eventId 역할)
