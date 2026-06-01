@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,11 +20,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: configService.get<string>('DB_USERNAME'), // root
         password: configService.get<string>('DB_PASSWORD'), // 비밀번호
         database: configService.get<string>('DB_DATABASE'), // pop_up_link
+        autoLoadEntities: true,
         entities: [], // MariaDB에 생성된 테이블들이 이 부분에 TypeScript 코드로 등록됩니다.
         synchronize: false, // ⭐ true일 경우 코드가 변경될 때 DB 구조가 저동으로 바뀌어서 위험. false로 안전하게 통제
       }),
       inject: [ConfigService], // 비동기 연결을 위해 ConfigService라는 부품을 주입(Inject)합니다.
     }),
+
+    UserModule,
   ],
 })
 export class AppModule {}
