@@ -1,8 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { LinkService } from './link.service';
 import { CreateLinkDto } from './dto/create-link.dto';
-import { UpdateLinkDto } from './dto/update-link.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guards'; // 👈 JWT 인증 가드 임포트
+// import { UpdateLinkDto } from './dto/update-link.dto';
 
+@Controller('link')
+export class LinkController {
+  constructor(private readonly linkService: LinkService) {}
+
+  // POST http://localhost:3000/link
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  async create(@Body() createLinkDto: CreateLinkDto, @Req() req: any) {
+
+    // 경호원(JwtAuthGuard)이 손님의 티켓을 검사한 뒤, 
+    // "이 사람은 1번 유저 민규님입니다" 하고 
+    // 배달 요청 주머니(@Req) 안의 'user' 칸에 쏙 넣어놨습니다.
+    const user = req.user;
+
+    return await this.linkService.create(createLinkDto, user);
+  }
+}
+
+/*
 @Controller('link')
 export class LinkController {
   constructor(private readonly linkService: LinkService) {}
@@ -32,3 +52,4 @@ export class LinkController {
     return this.linkService.remove(+id);
   }
 }
+*/
