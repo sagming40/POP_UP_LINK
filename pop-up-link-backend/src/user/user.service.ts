@@ -14,6 +14,10 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOne({ where: { email } });
+  }
+
   // 회원가입 로직
   async signUp(createUserDto: CreateUserDto): Promise<User> {
     const { email, password, nickname } = createUserDto;

@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { LinkModule } from './link/link.module';
 import { EventModule } from './event/event.module';
 import { ReservationModule } from './reservation/reservation.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,6 +38,8 @@ import { ReservationModule } from './reservation/reservation.module';
     EventModule,
 
     ReservationModule,
+
+    AuthModule,
   ],
 })
 export class AppModule {}
